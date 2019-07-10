@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mock-up</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="js/jquery.min.js"></script>
+    
+</head>
+
+
+<body>
+
+       
+<div id="main">   
+    <section><h2 id="text-01" data-interval="30" data-animate-class="flipInX" class="separate-span">1.TEXT テキスト てきすと</h2></section>
+    <section><h2 id="text-02" data-interval="30" data-animate-class="bounceInUp" class="separate-span">2.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-03" data-interval="60" data-animate-class="bounceInBig" class="separate-span">3.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-04" data-interval="60" data-animate-class="rubberIn" class="separate-span">4.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-05" data-interval="60" data-animate-class="flipIn2" class="separate-span">5.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-06" data-interval="60" data-animate-class="flingIn" class="separate-span">6.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-07" data-interval="60" data-animate-class="rollSlidIn" class="separate-span">7.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-08" data-interval="60" data-animate-class="test" class="separate-span">8.TEXT ANIMATION</h2></section>
+    <section><h2 id="text-09" data-interval="30" data-animate-class="test2" class="separate-span">9.TEXT ANIMATION</h2></section>
+</div>
+
+<script type="text/javascript">
+    
+    var targetClass     = ".separate-span";
+    var target          = $(targetClass);
+    
+    //spanに分割する
+    target.children().andSelf().contents().each(function() {                
+        if (this.nodeType == 3) {
+            $(this).replaceWith($(this).text().replace(/(\S)/g, "<span>$&</span>"));
+        }
+    });
+    // 動きの演出をつける
+    target.each(function() {
+        var addClassName    = $(this).data('animate-class');
+        var delayInterval   = $(this).data('interval');
+        var delayIntervalArr = [];
+        
+        // 
+        $(this).children('span').each(function(i){
+            i = i+1;
+            delayIntervalArr.push(delayInterval*i +'ms')
+        })
+        
+        // シャッフル
+        //delayIntervalArr = shuffle(delayIntervalArr)
+        // リバース
+        //delayIntervalArr = delayIntervalArr.reverse();
+        
+        // classを追加
+        $(this).children('span').addClass(addClassName);
+        // delayを追加
+        $(this).children('span').each(function(i) {
+
+            $(this).css('animation-delay',delayIntervalArr[i]);
+        });
+    });
+
+    // 配列をシャッフルする
+    function shuffle(arr) {
+        for(var i=0;i<arr.length;i++){
+            var index = Math.floor(arr.length * Math.random());
+            var ele = arr[i];
+            arr[i]=arr[index];
+            arr[index]=ele;
+        }
+      return arr;
+    }
+    
+</script>
+<style>
+    .separate-span span{
+        display: inline-block;
+    }
+</style>
+
+
+</body>
+</html>
